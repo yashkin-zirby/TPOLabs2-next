@@ -15,12 +15,15 @@ import pageobject_model.page.pastebin.PasteBinHomePage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 public class PasteBinTest {
     WebDriver driver;
     @BeforeMethod(alwaysRun = true)
     public void initChromeDriver(){
         driver = new ChromeDriver();
+        driver.manage().timeouts().setScriptTimeout(1, TimeUnit.MINUTES);
+        driver.manage().timeouts().pageLoadTimeout(1, TimeUnit.MINUTES);
     }
     @Test
     public void ICanWinCreatePasteTest(){

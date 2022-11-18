@@ -12,13 +12,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class PasteBinHomePage {
     private final String HOMEPAGE_URL = "https://pastebin.com";
     private final WebDriver driver;
-    @FindBy(id = "postform-text")
+    @FindBy(xpath = "//*[@id='postform-text']")
     private WebElement pasteTextBox;
-    @FindBy(id = "select2-postform-expiration-container")
+    @FindBy(xpath = "//div[@class=\"form-group field-postform-expiration\"]//*[@class=\"select2-selection__arrow\"]")
     private WebElement pasteExpirationList;
     @FindBy(xpath="//li[text()='10 Minutes']")
     private WebElement tenMinutePasteExpiration;
-    @FindBy(id = "postform-name")
+    @FindBy(xpath = "//*[@id='postform-name']")
     private  WebElement pasteTitleTextBox;
     @FindBy(xpath="//*[@id='w0']/div[5]/div[1]/div[10]/button")
     private WebElement createPasteButton;
@@ -26,6 +26,7 @@ public class PasteBinHomePage {
     private WebElement syntaxHighlighting;
     @FindBy(xpath = "//li[text()='Bash']")
     private WebElement bashSyntaxHighlighting;
+    private String title;
 
     public PasteBinHomePage(WebDriver driver){
         this.driver = driver;
@@ -57,11 +58,13 @@ public class PasteBinHomePage {
         return this;
     }
     public PasteBinHomePage typePasteTitle(String title) {
+        new WebDriverWait(driver,15).until(ExpectedConditions.presenceOfElementLocated(By.id("postform-name")));
         pasteTitleTextBox.sendKeys(title);
+        this.title = pasteTitleTextBox.getText();
         return this;
     }
     public CreatedPastePage createPaste(){
         createPasteButton.click();
-        return new CreatedPastePage(driver,pasteTitleTextBox.getText());
+        return new CreatedPastePage(driver,title);
     }
 }

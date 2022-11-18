@@ -18,13 +18,23 @@ public class GoogleFontsTest {
         driver = new ChromeDriver();
     }
     @Test
-    public void DownloadFontWithSansWordInName() throws FileNotFoundException {
+    public void DownloadFontWithSansWordInName() throws FileNotFoundException, InterruptedException {
         File downloadedFontFile = new GoogleFontsHomePage(driver)
                 .openPage()
                 .searchByFontName("sans")
                 .clickOnFontAtNumber(2)
                 .downloadFamily();
         Assert.assertTrue(downloadedFontFile.getName().toLowerCase().contains("sans"),"Имя файла "+downloadedFontFile.getName()+" - не содержит слова sans");
+    }
+    @Test
+    public void FindFontWithMinimumNineStylesTest() throws InterruptedException {
+        int styleCount = new GoogleFontsHomePage(driver)
+                .openPage()
+                .setMinStyleCount(9)
+                .clickOnFontAtNumber(1)
+                .getFontStyleCount();
+        Thread.sleep(5000);
+        Assert.assertTrue(styleCount >= 9);
     }
     @AfterMethod(alwaysRun = true)
     public void exitDriver(){
