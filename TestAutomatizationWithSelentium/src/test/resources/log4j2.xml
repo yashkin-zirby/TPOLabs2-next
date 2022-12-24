@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Configuration xmlns="http://logging.apache.org/log4j/2.0/config">
+    <Appenders>
+        <Console name="Console" target="">
+            <PatternLayout pattern="%d %p %c{2} [%t] %l %m%n"/>
+        </Console>
+        <File name="File" filename="target/logs/GoogleFontsTests.log">
+            <PatternLayout pattern="%d %p %c{2} [%t] %l %m%n"/>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Root level="trace">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>
