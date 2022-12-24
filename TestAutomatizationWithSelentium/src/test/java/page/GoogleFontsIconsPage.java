@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import test.CustomConditions;
@@ -23,12 +24,14 @@ public class GoogleFontsIconsPage extends AbstractPage {
     private String UriContain = "";
     public GoogleFontsIconsPage(){
         super(WebDriverSingleton.getDriver());
+        new WebDriverWait(driver,WAIT_TIMEOUT_SECONDS)
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@aria-label='Open Category menu']")));
+        PageFactory.initElements(driver,this);
+
     }
     public GoogleFontsIconsPage selectIconsCategory(String category){
         categoryButton.click();
-        String camelCase = category.toLowerCase();
-        camelCase = camelCase.substring(0,1).toUpperCase()+camelCase.substring(1);
-        By locator = By.xpath("//span[contains(text(),'"+camelCase+"')]/ancestor::button");
+        By locator = By.xpath("//span[contains(text(),'"+category+"')]/ancestor::button");
         new WebDriverWait(driver,WAIT_TIMEOUT_SECONDS)
                 .until(ExpectedConditions.presenceOfElementLocated(locator));
         WebElement categoryItem = driver.findElement(locator);
@@ -57,6 +60,8 @@ public class GoogleFontsIconsPage extends AbstractPage {
         new WebDriverWait(driver,WAIT_TIMEOUT_SECONDS)
                 .until(ExpectedConditions.presenceOfElementLocated(locator));
         WebElement icon = driver.findElement(locator);
+        new WebDriverWait(driver,WAIT_TIMEOUT_SECONDS)
+                .until(ExpectedConditions.elementToBeClickable(icon));
         icon.click();
         return this;
     }
